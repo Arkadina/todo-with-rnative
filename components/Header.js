@@ -1,13 +1,15 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Header() {
-    const data = useSelector((state) => state.todoReducer);
-    console.log(data);
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
-            <Text style={styles.logoText}>myTodo.</Text>
+            <Pressable onPress={(e) => navigation.navigate("Home")}>
+                <Text style={styles.logoText}>myTodo.</Text>
+            </Pressable>
             <Pressable>
                 <Text style={styles.pressableText}>Add todo</Text>
             </Pressable>
@@ -33,5 +35,7 @@ const styles = StyleSheet.create({
     pressableText: {
         color: "#FFF",
         textAlign: "center",
+        position: "relative",
+        top: 8,
     },
 });

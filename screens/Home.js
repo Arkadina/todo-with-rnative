@@ -1,13 +1,14 @@
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
 import React from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Header from "../components/Header";
 import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Home() {
-    console.log(Dimensions.get("window"));
     const data = useSelector((state) => state.todoReducer);
+    const navigation = useNavigation();
     return (
         <SafeAreaProvider>
             <SafeAreaView>
@@ -16,20 +17,28 @@ export default function Home() {
                     <View
                         style={[
                             styles.container,
-                            { height: Dimensions.get("window").height - 120 },
+                            {
+                                height: Dimensions.get("window").height - 120,
+                                flex: 0,
+                                alignItems: "center",
+                                justifyContent: "center",
+                            },
                         ]}
                     >
                         {data.todosLength == 0 ? (
                             <View style={styles.containerNoText}>
                                 <Text style={styles.textNoTodo}>
-                                    Ops! Looks like you don’t have any todo.
+                                    Ops! Looks like you don't have any todo.
                                 </Text>
-                                <View
+                                <Pressable
                                     style={{
                                         flex: 0,
                                         flexDirection: "row",
                                         alignItems: "center",
                                     }}
+                                    onPress={(e) =>
+                                        navigation.navigate("AddTodo")
+                                    }
                                 >
                                     <Text style={styles.textSmallNoTodo}>
                                         create now
@@ -39,7 +48,7 @@ export default function Home() {
                                         size={12}
                                         color="#CA0049"
                                     />
-                                </View>
+                                </Pressable>
                             </View>
                         ) : (
                             <Text>"Todo"</Text>
@@ -53,9 +62,7 @@ export default function Home() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 0,
-        alignItems: "center",
-        justifyContent: "center",
+        elevation: 10,
         position: "relative",
         backgroundColor: "#FFF",
         borderTopLeftRadius: 50,

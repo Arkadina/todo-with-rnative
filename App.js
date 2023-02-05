@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Provider } from "react-redux";
+import AddTodo from "./screens/AddTodo";
 
 import Home from "./screens/Home";
 import store from "./store";
@@ -13,6 +14,7 @@ export default function App() {
             <NavigationContainer>
                 <Stack.Navigator screenOptions={{ headerShown: false }}>
                     <Stack.Screen name="Home" component={Home} />
+                    <Stack.Screen name="AddTodo" component={AddTodo} />
                 </Stack.Navigator>
             </NavigationContainer>
         </Provider>
