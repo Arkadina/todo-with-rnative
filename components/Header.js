@@ -1,6 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Header() {
@@ -10,8 +9,8 @@ export default function Header() {
             <Pressable onPress={(e) => navigation.navigate("Home")}>
                 <Text style={styles.logoText}>myTodo.</Text>
             </Pressable>
-            <Pressable>
-                <Text style={styles.pressableText}>Add todo</Text>
+            <Pressable onPress={(e) => navigation.navigate("Home")}>
+                <Text style={styles.pressableText}>Home</Text>
             </Pressable>
         </View>
     );

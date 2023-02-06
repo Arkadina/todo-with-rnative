@@ -1,10 +1,19 @@
-import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    View,
+    Dimensions,
+    Pressable,
+    TextInput,
+    Keyboard,
+} from "react-native";
 import React from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Header from "../components/Header";
+import Button from "../components/Buttons";
 
 export default function AddTodo() {
+    console.log(Keyboard);
     return (
         <SafeAreaProvider>
             <SafeAreaView>
@@ -15,29 +24,26 @@ export default function AddTodo() {
                         {
                             height: Dimensions.get("window").height - 120,
                             flex: 0,
-                            alignItems: "center",
                         },
                     ]}
                 >
-                    <View
-                        style={{
-                            flex: 0,
-                            flexDirection: "row",
-                            alignSelf: "flex-end",
-                        }}
-                    >
-                        <Pressable style={styles.buttonLink}>
-                            <Text style={styles.buttonText}>Add todo</Text>
-                            <MaterialIcons
-                                name="post-add"
-                                size={20}
-                                color="#FFF"
+                    <View>
+                        <Button />
+
+                        <View style={styles.inputContainer}>
+                            <Text style={styles.text}>Todo</Text>
+                            <TextInput
+                                style={styles.textInput}
+                                multiline
+                                numberOfLines={4}
+                                maxLength={100}
                             />
-                        </Pressable>
-                        <Pressable style={styles.buttonLink2}>
-                            <Text style={styles.buttonText}>See todos</Text>
-                        </Pressable>
+                        </View>
                     </View>
+
+                    <Pressable style={styles.buttonConfirm}>
+                        <Text style={styles.buttonConfirmText}>Confirm</Text>
+                    </Pressable>
                 </View>
             </SafeAreaView>
         </SafeAreaProvider>
@@ -46,6 +52,8 @@ export default function AddTodo() {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 0,
+        justifyContent: "space-between",
         position: "relative",
         backgroundColor: "#FFF",
         borderTopLeftRadius: 50,
@@ -53,31 +61,37 @@ const styles = StyleSheet.create({
         padding: 20,
         elevation: 10,
     },
-    buttonLink: {
+    content: {
         flex: 0,
-        flexDirection: "row",
-        paddingVertical: 8,
-        paddingHorizontal: 30,
-        backgroundColor: "#E11F65",
-        borderRadius: 4,
-        elevation: 5,
-        marginRight: 5,
     },
-    buttonLink2: {
+    buttonConfirm: {
         flex: 0,
-        flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        paddingVertical: 8,
-        paddingHorizontal: 25,
+        width: "100%",
+        height: 48,
         backgroundColor: "#E11F65",
         borderRadius: 4,
         elevation: 5,
     },
-    buttonText: {
-        color: "#FFF",
-        fontSize: 12,
+    buttonConfirmText: {
         fontWeight: "bold",
-        marginRight: 5,
+        color: "#FFF",
+    },
+    inputContainer: {
+        width: "100%",
+    },
+    text: {
+        fontWeight: "bold",
+        color: "#E11F65",
+        alignSelf: "flex-start",
+        marginBottom: 10,
+    },
+    textInput: {
+        backgroundColor: "#E11F65",
+        borderRadius: 4,
+        color: "#FFF",
+        padding: 10,
+        maxHeight: 400,
     },
 });
