@@ -1,14 +1,37 @@
-import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    View,
+    Dimensions,
+    Pressable,
+    FlatList,
+} from "react-native";
 import React from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
 import Button from "../components/Buttons";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import moment from "moment/moment";
+// import { generateId } from "../utils/generateId";
 
 export default function RenderTodo() {
     const data = useSelector((state) => state.todoReducer);
     const navigation = useNavigation();
+    const DATA = [
+        {
+            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+            title: "First Item",
+        },
+        {
+            id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+            title: "Second Item",
+        },
+        {
+            id: "58694a0f-3da1-471f-bd96-145571e29d72",
+            title: "Third Item",
+        },
+    ];
     return (
         <SafeAreaProvider>
             <SafeAreaView>
@@ -19,13 +42,12 @@ export default function RenderTodo() {
                         {
                             height: Dimensions.get("window").height - 120,
                             flex: 0,
-                            alignItems: "center",
                         },
                     ]}
                 >
                     <Button />
                     <View>
-                        {data.todosLength == 0 ? (
+                        {/* {data.todosLength == 0 ? (
                             <View style={styles.containerNoText}>
                                 <Text style={styles.textNoTodo}>
                                     Ops! Looks like you don't have any todo.
@@ -44,16 +66,27 @@ export default function RenderTodo() {
                                         create now
                                     </Text>
                                 </Pressable>
-                            </View>
-                        ) : (
-                            <Text>"Todo"</Text>
-                        )}
+                            </View> */}
+                        <Text>1</Text>
+                        <FlatList
+                            data={DATA}
+                            renderItem={({ item }) => (
+                                <Item title={item.title} />
+                            )}
+                            keyExtractor={(item) => item.id}
+                        />
                     </View>
                 </View>
             </SafeAreaView>
         </SafeAreaProvider>
     );
 }
+
+const Item = ({ title }) => (
+    <View style={styles.todoContainer}>
+        <Text style={styles.todoText}>{title}</Text>
+    </View>
+);
 
 const styles = StyleSheet.create({
     container: {
@@ -81,5 +114,17 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#CA0049",
         marginRight: 10,
+    },
+    todoContainer: {
+        backgroundColor: "#E11F65",
+        width: "100%",
+        marginTop: 10,
+        marginBottom: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        borderRadius: 5,
+    },
+    todoText: {
+        color: "#FFF",
     },
 });
