@@ -9,8 +9,8 @@ export default function Header() {
             <Pressable onPress={(e) => navigation.navigate("Home")}>
                 <Text style={styles.logoText}>myTodo.</Text>
             </Pressable>
-            <Pressable onPress={(e) => navigation.navigate("Home")}>
-                <Text style={styles.pressableText}>Home</Text>
+            <Pressable onPress={(e) => navigation.navigate("RenderTodo")}>
+                <Text style={styles.pressableText}>Todo list</Text>
             </Pressable>
         </View>
     );

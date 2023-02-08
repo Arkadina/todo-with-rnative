@@ -5,15 +5,17 @@ import {
     Dimensions,
     Pressable,
     TextInput,
-    Keyboard,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
 import Button from "../components/Buttons";
+import { useDispatch } from "react-redux";
+import { addTodo } from "../features/todoSlicer";
 
 export default function AddTodo() {
-    console.log(Keyboard);
+    const dispatch = useDispatch();
+    const [input, setInput] = useState("");
     return (
         <SafeAreaProvider>
             <SafeAreaView>
@@ -37,11 +39,15 @@ export default function AddTodo() {
                                 multiline
                                 numberOfLines={4}
                                 maxLength={100}
+                                onChangeText={(e) => setInput(e)}
                             />
                         </View>
                     </View>
 
-                    <Pressable style={styles.buttonConfirm}>
+                    <Pressable
+                        style={styles.buttonConfirm}
+                        onPress={(e) => dispatch(addTodo(input))}
+                    >
                         <Text style={styles.buttonConfirmText}>Confirm</Text>
                     </Pressable>
                 </View>

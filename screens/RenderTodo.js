@@ -13,25 +13,12 @@ import Button from "../components/Buttons";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment/moment";
+import { Item } from "../components/Item";
 // import { generateId } from "../utils/generateId";
 
 export default function RenderTodo() {
     const data = useSelector((state) => state.todoReducer);
     const navigation = useNavigation();
-    const DATA = [
-        {
-            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-            title: "First Item",
-        },
-        {
-            id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-            title: "Second Item",
-        },
-        {
-            id: "58694a0f-3da1-471f-bd96-145571e29d72",
-            title: "Third Item",
-        },
-    ];
     return (
         <SafeAreaProvider>
             <SafeAreaView>
@@ -46,47 +33,48 @@ export default function RenderTodo() {
                     ]}
                 >
                     <Button />
-                    <View>
-                        {/* {data.todosLength == 0 ? (
-                            <View style={styles.containerNoText}>
-                                <Text style={styles.textNoTodo}>
-                                    Ops! Looks like you don't have any todo.
+
+                    {data.todosLength == 0 ? (
+                        <View style={styles.containerNoText}>
+                            <Text style={styles.textNoTodo}>
+                                Ops! Looks like you don't have any todo.
+                            </Text>
+                            <Pressable
+                                style={{
+                                    flex: 0,
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                }}
+                                onPress={(e) => navigation.navigate("AddTodo")}
+                            >
+                                <Text style={styles.textSmallNoTodo}>
+                                    create now
                                 </Text>
-                                <Pressable
-                                    style={{
-                                        flex: 0,
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                    }}
-                                    onPress={(e) =>
-                                        navigation.navigate("AddTodo")
-                                    }
-                                >
-                                    <Text style={styles.textSmallNoTodo}>
-                                        create now
-                                    </Text>
-                                </Pressable>
-                            </View> */}
-                        <Text>1</Text>
-                        <FlatList
-                            data={DATA}
-                            renderItem={({ item }) => (
-                                <Item title={item.title} />
-                            )}
-                            keyExtractor={(item) => item.id}
-                        />
-                    </View>
+                            </Pressable>
+                        </View>
+                    ) : (
+                        <View>
+                            <Text style={styles.textTotalTodo}>
+                                Total todo: {data.todosLength}
+                            </Text>
+                            <FlatList
+                                data={data.todos}
+                                renderItem={({ item }) => (
+                                    <Item
+                                        todo={item.todo}
+                                        id={item.id}
+                                        time={item.time}
+                                    />
+                                )}
+                                keyExtractor={(item) => item.id}
+                            />
+                        </View>
+                    )}
                 </View>
             </SafeAreaView>
         </SafeAreaProvider>
     );
 }
-
-const Item = ({ title }) => (
-    <View style={styles.todoContainer}>
-        <Text style={styles.todoText}>{title}</Text>
-    </View>
-);
 
 const styles = StyleSheet.create({
     container: {
@@ -115,16 +103,9 @@ const styles = StyleSheet.create({
         color: "#CA0049",
         marginRight: 10,
     },
-    todoContainer: {
-        backgroundColor: "#E11F65",
-        width: "100%",
-        marginTop: 10,
+    textTotalTodo: {
+        color: "#707070",
+        fontStyle: "italic",
         marginBottom: 5,
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        borderRadius: 5,
-    },
-    todoText: {
-        color: "#FFF",
     },
 });

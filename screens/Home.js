@@ -1,10 +1,18 @@
-import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    View,
+    Dimensions,
+    Pressable,
+    FlatList,
+} from "react-native";
 import React from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Header from "../components/Header";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { Item } from "../components/Item";
 
 export default function Home() {
     const data = useSelector((state) => state.todoReducer);
@@ -51,7 +59,17 @@ export default function Home() {
                                 </Pressable>
                             </View>
                         ) : (
-                            <Text>"Todo"</Text>
+                            <FlatList
+                                data={data.todos}
+                                renderItem={({ item }) => (
+                                    <Item
+                                        todo={item.todo}
+                                        id={item.id}
+                                        time={item.time}
+                                    />
+                                )}
+                                keyExtractor={(item) => item.id}
+                            />
                         )}
                     </View>
                 </View>
