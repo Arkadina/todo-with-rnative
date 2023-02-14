@@ -12,13 +12,12 @@ import Header from "../components/Header";
 import Button from "../components/Buttons";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import moment from "moment/moment";
 import { Item } from "../components/Item";
-// import { generateId } from "../utils/generateId";
 
 export default function RenderTodo() {
     const data = useSelector((state) => state.todoReducer);
     const navigation = useNavigation();
+
     return (
         <SafeAreaProvider>
             <SafeAreaView>

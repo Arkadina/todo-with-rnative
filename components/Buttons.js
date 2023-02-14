@@ -1,17 +1,48 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
-import React from "react";
+import {
+    StyleSheet,
+    Text,
+    View,
+    Pressable,
+    Animated,
+    Easing,
+} from "react-native";
+import React, { useRef } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Button() {
     const navigation = useNavigation();
+    const value = useRef(new Animated.Value(1)).current;
+
     return (
         <View style={styles.buttonContainer}>
             <Pressable
                 style={styles.buttonLink}
-                onPress={(e) => navigation.navigate("AddTodo")}
+                onPress={(e) => {
+                    Animated.timing(value, {
+                        toValue: 0.9,
+                        useNativeDriver: true,
+                        duration: 1000,
+                        easing: Easing.linear,
+                    }).start();
+
+                    navigation.navigate("AddTodo");
+                }}
             >
-                <Text style={styles.buttonText}>Add todo</Text>
+                <Animated.Text
+                    style={[
+                        styles.buttonText,
+                        {
+                            transform: [
+                                {
+                                    scale: value,
+                                },
+                            ],
+                        },
+                    ]}
+                >
+                    Add todo
+                </Animated.Text>
                 <MaterialIcons name="post-add" size={20} color="#FFF" />
             </Pressable>
             <Pressable
